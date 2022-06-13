@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model
 {
     use HasFactory;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relacion polimorfica
+    public function favoriteable()
+    {
+        return $this->morphTo();
+    }
 }

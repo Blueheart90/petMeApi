@@ -9,6 +9,10 @@ class AdoptionProcess extends Model
 {
     use HasFactory;
 
+    const REVIEWREQUIRED = 1;
+    const REJECTED = 2;
+    const COMPLETED = 3;
+
     public function user()
     {
         return $this->belongsTo(User::class);

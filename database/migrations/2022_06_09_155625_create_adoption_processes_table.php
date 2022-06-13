@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AdoptionProcess;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('petpost_id');
-            $table->string('status');
+            $table->enum('status', [AdoptionProcess::REVIEWREQUIRED, AdoptionProcess::REJECTED, AdoptionProcess::COMPLETED])
+                ->default(AdoptionProcess::REVIEWREQUIRED);
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('petpost_id')->references('id')->on('petposts');
