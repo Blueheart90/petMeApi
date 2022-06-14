@@ -35,5 +35,7 @@ class UserSeeder extends Seeder
             'email' => 'gabriel@hotmail.com',
             'password' => Hash::make('123456'),
         ]);
+
+        User::factory(20)->create();
     }
 }
