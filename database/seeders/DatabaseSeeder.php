@@ -22,6 +22,10 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             UserSeeder::class,
+            PettypeSeeder::class,
+            PetbreedSeeder::class,
+            PetpostSeeder::class,
+            CommunityPostSeeder::class,
         ]);
     }
 }

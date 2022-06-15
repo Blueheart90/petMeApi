@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('pettype_id');
-            $table->text('description');
             $table->timestamps();
 
             $table->foreign('pettype_id')->references('id')->on('pettypes')->onDelete('cascade');
