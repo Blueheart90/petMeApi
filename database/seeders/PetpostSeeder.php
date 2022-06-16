@@ -26,10 +26,11 @@ class PetpostSeeder extends Seeder
                 'imageable_type' => Petpost::class,
             ]);
 
+
             if ($key < 5) {
                 AdoptionProcess::factory(1)->create([
                     'petpost_id' => $post->id,
-                    'user_id' => User::where('id', '!=', $post->user_id)->first()->id,
+                    'user_id' => User::where('id', '!=', $post->user_id)->get()->random(1)->first()->id,
                 ]);
             }
         }

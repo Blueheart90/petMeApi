@@ -38,6 +38,6 @@ class Petpost extends Model
     public function pettype()
     {
 
-        return $this->hasOneThrough(Pettype::class, Petbreed::class);
+        return $this->hasOneThrough(Pettype::class, Petbreed::class, 'id', 'id', 'petbreed_id', 'pettype_id');
     }
 }

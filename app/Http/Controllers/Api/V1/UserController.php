@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Pettype;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\UserCollection;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class PettypeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,8 @@ class PettypeController extends Controller
      */
     public function index()
     {
-        //
+        $latestUsers = User::latest()->get();
+        return new UserCollection($latestUsers);
     }
 
     /**
@@ -31,10 +34,10 @@ class PettypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pettype  $pettype
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Pettype $pettype)
+    public function show(User $user)
     {
         //
     }
@@ -43,10 +46,10 @@ class PettypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pettype  $pettype
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pettype $pettype)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -54,10 +57,10 @@ class PettypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pettype  $pettype
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pettype $pettype)
+    public function destroy(User $user)
     {
         //
     }

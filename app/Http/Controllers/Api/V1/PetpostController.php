@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\PetpostCollection;
+use App\Http\Resources\V1\PetpostResource;
 use App\Models\Petpost;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,8 @@ class PetpostController extends Controller
      */
     public function index()
     {
-        //
+        $latestPetposts = Petpost::latest()->get();
+        return new PetpostCollection($latestPetposts);
     }
 
     /**
