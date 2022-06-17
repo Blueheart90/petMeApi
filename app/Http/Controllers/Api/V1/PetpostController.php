@@ -17,7 +17,7 @@ class PetpostController extends Controller
      */
     public function index()
     {
-        $latestPetposts = Petpost::latest()->get();
+        $latestPetposts = Petpost::latest()->paginate();
         return new PetpostCollection($latestPetposts);
     }
 
@@ -29,7 +29,21 @@ class PetpostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'petbreed_id' => 'required',
+            'healh_status' => 'required',
+            'petage' => 'required',
+            'location' => 'required',
+            'petgender' => 'required',
+            'petname' => 'required',
+            'petsize' => 'required',
+            'status' => 'required',
+            'petdescription' => 'required',
+        ]);
+
+        $petpost = auth()->user()->petposts()->create($request->all());
+
+        return response()->json(['message' => 'success', 'petpost' => $petpost], 200);
     }
 
     /**

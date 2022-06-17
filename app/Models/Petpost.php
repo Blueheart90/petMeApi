@@ -9,6 +9,23 @@ class Petpost extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'petbreed_id',
+        'healh_status',
+        'petage',
+        'location',
+        'petgender',
+        'petname',
+        'petsize',
+        'status',
+        'petdescription',
+    ];
+
     protected $casts = [
         'healh_status' => 'array',
         'petage' => 'array',
