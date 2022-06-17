@@ -14,17 +14,19 @@ class Petpost extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'petbreed_id',
-        'healh_status',
-        'petage',
-        'location',
-        'petgender',
-        'petname',
-        'petsize',
-        'status',
-        'petdescription',
-    ];
+    // protected $fillable = [
+    //     'petbreed_id',
+    //     'healh_status',
+    //     'petage',
+    //     'location',
+    //     'petgender',
+    //     'petname',
+    //     'petsize',
+    //     'status',
+    //     'petdescription',
+    // ];
+
+    protected $guarded = ['id', 'status'];
 
     protected $casts = [
         'healh_status' => 'array',
