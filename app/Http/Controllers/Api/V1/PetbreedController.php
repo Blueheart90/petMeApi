@@ -2,62 +2,54 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
 use App\Models\Petbreed;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\PetbreedCollection;
+use App\Models\Pettype;
 
 class PetbreedController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $breeds = Petbreed::all();
+        return new PetbreedCollection($breeds);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function getCatbreeds()
+    {
+        $breeds = Petbreed::where('pettype_id', Pettype::CAT)->get();
+        return new PetbreedCollection($breeds);
+    }
+
+    public function getDogbreeds()
+    {
+        $breeds = Petbreed::where('pettype_id', Pettype::DOG)->get();
+        return new PetbreedCollection($breeds);
+    }
+
+    public function getBirdbreeds()
+    {
+        $breeds = Petbreed::where('pettype_id', Pettype::BIRD)->get();
+        return new PetbreedCollection($breeds);
+    }
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Petbreed  $petbreed
-     * @return \Illuminate\Http\Response
-     */
     public function show(Petbreed $petbreed)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Petbreed  $petbreed
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Petbreed $petbreed)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Petbreed  $petbreed
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Petbreed $petbreed)
     {
         //

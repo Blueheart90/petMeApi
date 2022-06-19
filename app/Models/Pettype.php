@@ -9,6 +9,10 @@ class Pettype extends Model
 {
     use HasFactory;
 
+    const DOG = 1;
+    const CAT = 2;
+    const BIRD = 3;
+
     public function petposts()
     {
         return $this->hasMany(Petpost::class);

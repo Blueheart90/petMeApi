@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\PetpostCollection;
-use App\Http\Resources\V1\PetpostResource;
+use App\Models\User;
 use App\Models\Petpost;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\PetpostResource;
+use App\Http\Resources\V1\PetpostCollection;
 
 class PetpostController extends Controller
 {
@@ -44,6 +45,19 @@ class PetpostController extends Controller
     {
         //
     }
+
+    public function getForStatus($status)
+    {
+        $publishedPosts = Petpost::where('status', $status)->get();
+        return new PetpostCollection($publishedPosts);
+    }
+
+    public function getForUser(User $user)
+    {
+        $userPosts = $user->petposts()->get();
+        return new PetpostCollection($userPosts);
+    }
+
 
     public function destroy(Petpost $petpost)
     {
