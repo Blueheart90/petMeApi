@@ -60,13 +60,8 @@ class PetpostController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->get('keyword');
-        $petposts = Petpost::where('location', 'like', '%' . $keyword . '%')->get();
+        $petposts = Petpost::filter($request->all())->get();
 
-        // if($request->has('filters')) {
-        //     $filters = $request->get('filters');
-        //     $petposts = $petposts->where('petbreed_id', $breed);
-        // }
         if (!$petposts->isEmpty()) {
             return new PetpostCollection($petposts);
         } else {
