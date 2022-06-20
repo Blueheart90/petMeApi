@@ -58,6 +58,23 @@ class PetpostController extends Controller
         return new PetpostCollection($userPosts);
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        $petposts = Petpost::where('location', 'like', '%' . $keyword . '%')->get();
+
+        // if($request->has('filters')) {
+        //     $filters = $request->get('filters');
+        //     $petposts = $petposts->where('petbreed_id', $breed);
+        // }
+        if (!$petposts->isEmpty()) {
+            return new PetpostCollection($petposts);
+        } else {
+            return response()->json(['message' => 'No results found'], 404);
+        }
+    }
+
+
 
     public function destroy(Petpost $petpost)
     {

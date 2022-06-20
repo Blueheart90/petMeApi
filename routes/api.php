@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/pet'], function 
     Route::post('/', [PetpostController::class, 'store']);
     Route::get('/status/{status}', [PetpostController::class, 'getForStatus'])->where('status', '[1-3]+');
     Route::get('/user/{user}', [PetpostController::class, 'getForUser'])->where('user', '[0-9]+');
+    Route::get('/search', [PetpostController::class, 'search']);
 });
 
 // Petbreed
