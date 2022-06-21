@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Petpost::class);
     }
+
+    public function adoptionProcesses()
+    {
+        return $this->hasMany(AdoptionProcess::class);
+    }
 }

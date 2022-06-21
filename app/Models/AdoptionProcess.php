@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class AdoptionProcess extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     const REVIEWREQUIRED = 1;
     const REJECTED = 2;

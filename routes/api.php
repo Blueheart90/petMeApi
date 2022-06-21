@@ -1,13 +1,15 @@
 <?php
 
-use App\Models\Pettype;
-use App\Models\Petbreed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\AdoptionProcessController;
 use App\Http\Controllers\Api\V1\PetpostController;
 use App\Http\Controllers\Api\V1\PetbreedController;
+use App\Http\Controllers\Api\V1\UserController;
+use App\Models\Pettype;
+use App\Models\Petbreed;
+use App\Models\AdoptionProcess;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ use App\Http\Controllers\Api\V1\PetbreedController;
 //     return $request->user();
 // });
 
-
+// Petpost routes
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/pet'], function () {
     Route::get('/{petpost}', [PetpostController::class, 'show'])->where('petpost', '[0-9]+');
     Route::delete('/{petpost}', [PetpostController::class, 'destroy'])->where('petpost', '[0-9]+');
@@ -35,7 +37,16 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/pet'], function 
     Route::get('/search', [PetpostController::class, 'search']);
 });
 
-// Petbreed
+// Adoption process routes
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/adoption'], function () {
+    Route::get('/', [AdoptionProcessController::class, 'index']);
+    Route::get('/search', [AdoptionProcessController::class, 'search'])->where('status', '[1-3]+');
+    Route::get('/own', [AdoptionProcessController::class, 'ownAdoptions']);
+    Route::post('/create', [AdoptionProcessController::class, 'createAdoption']);
+});
+
+
+// Petbreed routes
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/breed'], function () {
     Route::get('/all', [PetbreedController::class, 'index']);
     Route::get('/dog', [PetbreedController::class, 'getDogbreeds']);
@@ -43,7 +54,7 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/breed'], functio
     Route::get('/bird', [PetbreedController::class, 'getBirdbreeds']);
 });
 
-// Pettype
+// Pettype route
 Route::get('v1/pettype', function () {
     return Pettype::all();
 });

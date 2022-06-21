@@ -65,7 +65,7 @@ class PetpostController extends Controller
         if (!$petposts->isEmpty()) {
             return new PetpostCollection($petposts);
         } else {
-            return response()->json(['message' => 'No results found'], 404);
+            return response()->json(['data' => [], 'message' => 'No results found'], 404);
         }
     }
 
