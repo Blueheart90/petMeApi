@@ -74,6 +74,23 @@ class AdoptionProcessController extends Controller
         return response(['message' => 'This Adoption is not pending review', 400]);
     }
 
+    public function approve(AdoptionProcess $adoptionProcess)
+    {
+        // check if the adoption process status is 'reviewRequired'
+        if ($adoptionProcess->status == AdoptionProcess::REVIEWREQUIRED) {
+
+            DB::transaction(function () use ($adoptionProcess) {
+                // set the  adoption's status to COMPLETED
+                $adoptionProcess->status = AdoptionProcess::COMPLETED;
+                $adoptionProcess->save();
+
+                // set the related petpost's status to COMPLETED
+                $adoptionProcess->petpost()->update(['status' => Petpost::COMPLETED]);
+            });
+            return response(['message' => 'The adoption was approved successfully'], 200);
+        }
+        return response(['message' => 'This Adoption is not pending review', 400]);
+    }
 
     /**
      * Store a newly created resource in storage.
