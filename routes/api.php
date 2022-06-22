@@ -40,9 +40,9 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/pet'], function 
 // Adoption process routes
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/adoption'], function () {
     Route::get('/', [AdoptionProcessController::class, 'index']);
-    Route::get('/search', [AdoptionProcessController::class, 'search'])->where('status', '[1-3]+');
-    Route::get('/own', [AdoptionProcessController::class, 'ownAdoptions']);
-    Route::post('/create', [AdoptionProcessController::class, 'createAdoption']);
+    Route::get('/status', [AdoptionProcessController::class, 'status'])->where('status', '[1-3]+');
+    Route::get('/user/me', [AdoptionProcessController::class, 'ownAdoptions']);
+    Route::post('/create/{petpost}', [AdoptionProcessController::class, 'createAdoption']);
 });
 
 

@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\AdoptionProcess;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\AdoptionProcessCollection;
+use App\Http\Resources\V1\AdoptionProcessResource;
 use App\Models\Petpost;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdoptionProcessController extends Controller
 {
@@ -23,7 +25,7 @@ class AdoptionProcessController extends Controller
     }
 
 
-    public function search(Request $request)
+    public function status(Request $request)
     {
         $adoptions = AdoptionProcess::filter($request->all())->get();
         return new AdoptionProcessCollection($adoptions);
@@ -35,15 +37,23 @@ class AdoptionProcessController extends Controller
         return new AdoptionProcessCollection($myAdoptions);
     }
 
-    public function createAdoption(Request $request)
+    public function createAdoption(Petpost $petpost)
     {
-        $request->validate([
-            'petpost_id' => 'required',
-        ]);
-        // Create a new adoptionProcess
-        auth()->user()->adoptionProcess()->create($request->all());
+        // check if the petpost status is published
+        if ($petpost->status == Petpost::PUBLISHED) {
 
-        // Update the status of the related petpost 
+            DB::transaction(function () use ($petpost) {
+
+                // Create a new adoptionProcess
+                auth()->user()->adoptionProcesses()->create(['petpost_id' => $petpost->id]);
+
+                // Update the status of the related petpost 
+                $petpost->status = Petpost::REVIEWREQUIRED;
+                $petpost->save();
+            });
+            return response(['message' => 'Adoption created successfully'], 200);
+        }
+        return response(['message' => 'This petpost is not published'], 400);
     }
 
 

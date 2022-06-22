@@ -14,6 +14,8 @@ class AdoptionProcess extends Model
     const REJECTED = 2;
     const COMPLETED = 3;
 
+    protected $guarded = ['id', 'status'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
