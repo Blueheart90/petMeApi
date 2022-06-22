@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1/adoption'], func
     Route::get('/status', [AdoptionProcessController::class, 'status'])->where('status', '[1-3]+');
     Route::get('/user/me', [AdoptionProcessController::class, 'ownAdoptions']);
     Route::post('/create/{petpost}', [AdoptionProcessController::class, 'createAdoption']);
+    Route::post('/reject/{adoption}', [AdoptionProcessController::class, 'reject']);
+    Route::post('/approve/{adoption}', [AdoptionProcessController::class, 'approve']);
 });
 
 

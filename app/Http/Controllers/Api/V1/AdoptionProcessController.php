@@ -56,6 +56,24 @@ class AdoptionProcessController extends Controller
         return response(['message' => 'This petpost is not published'], 400);
     }
 
+    public function reject(AdoptionProcess $adoptionProcess)
+    {
+        // check if the adoption process status is 'reviewRequired'
+        if ($adoptionProcess->status == AdoptionProcess::REVIEWREQUIRED) {
+
+            DB::transaction(function () use ($adoptionProcess) {
+                // set the  adoption's status to REJECTED
+                $adoptionProcess->status = AdoptionProcess::REJECTED;
+                $adoptionProcess->save();
+
+                // set the related petpost's status to PUBLISHED
+                $adoptionProcess->petpost()->update(['status' => Petpost::PUBLISHED]);
+            });
+            return response(['message' => 'The adoption was reject successfully'], 200);
+        }
+        return response(['message' => 'This Adoption is not pending review', 400]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
